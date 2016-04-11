@@ -21,5 +21,6 @@
         </config-file>
         <source-file src="lib/android/csopensdk.jar" target-dir="libs" />
         <source-file src="src/android/CordovaCamscanner.java" target-dir="src/com/beelphegor/cordovacamscanner" />
-    </platform>    
+        <preference name="APP_KEY" />
+    </platform>
 </plugin>
