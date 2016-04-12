@@ -33,7 +33,9 @@ public class CordovaCamscanner extends CordovaPlugin {
                 String outputUri = args.getString(1);
                 validateInputs(srcUri, outputUri);
                 Context context = this.cordova.getActivity().getApplicationContext();
-                api = CSOpenApiFactory.createCSOpenApi(context, "APP_KEY", null);
+                int appResId = cordova.getActivity().getResources().getIdentifier("camscanner_app_key", "string", cordova.getActivity().getPackageName());
+                String appKey = cordova.getActivity().getString(appResId);
+                api = CSOpenApiFactory.createCSOpenApi(context, appKey, null);
 
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
                 _scannedFileUri = outputUri + "/" + timeStamp;
