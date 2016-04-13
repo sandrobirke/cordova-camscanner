@@ -43,7 +43,7 @@ public class CordovaCamscanner extends CordovaPlugin {
                         srcUri,
                         _scannedFileUri + ".jpg",
                         null,
-                        _scannedFileUri + "_org.jpg",
+                        null,
                         1.0f);
                 boolean res = api.scanImage(this.cordova.getActivity(), 2, openApiParam);
                 return true;
