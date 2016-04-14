@@ -23,8 +23,10 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <activity android:name="com.beelphegor.cordovacamscanner.CamscannerActivity" ></activity>
         </config-file>
         <source-file src="lib/android/csopensdk.jar" target-dir="libs" />
         <source-file src="src/android/CordovaCamscanner.java" target-dir="src/com/beelphegor/cordovacamscanner" />
+        <source-file src="src/android/CamscannerActivity.java" target-dir="src/com/beelphegor/cordovacamscanner" />
     </platform>
 </plugin>
