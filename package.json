@@ -1,6 +1,6 @@
 {
   "name": "cordova-camscanner",
-  "version": "0.18.0",
+  "version": "1.0.0",
   "description": "Cordova Camscanner Plugin",
   "cordova": {
     "id": "cordova-camscanner",
