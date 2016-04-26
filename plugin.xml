@@ -31,7 +31,17 @@
     </platform>
     <platform name="ios">
         <preference name="IOS_APP_KEY" />
+        <preference name="URL_SCHEME" />
         <config-file target="*-Info.plist" parent="CamscannerAppKey">
+            <string>$IOS_APP_KEY</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>URLSchemes</key>
+                    <string>$URL_SCHEME</string>
+                </dict>
+            </array>
             <string>$IOS_APP_KEY</string>
         </config-file>
         <config-file target="config.xml" parent="/*">
