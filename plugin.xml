@@ -41,7 +41,7 @@
             </feature>
         </config-file>
         <header-file src="src/ios/CordovaCamscanner.h"/>
-        <source-file src="src/ios/COrdovaCamscanner.m" />
+        <source-file src="src/ios/CordovaCamscanner.m" />
         <framework src="lib/ios/CamScannerOpenAPIFramework.framework" custom="true" />
     </platform>
 </plugin>

@@ -2,6 +2,6 @@
 
 @interface CordovaCamscanner : CDVPlugin
 
-- (void)scan: (CDVInvokeUrlCommand*)command
+- (void)scan: (CDVInvokedUrlCommand*)command;
 
 @end
