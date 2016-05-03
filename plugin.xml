@@ -40,7 +40,7 @@
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
-                    <key>URLSchemes</key>
+                    <key>URL Schemes</key>
                     <array>
                         <string>$BUNDLE_ID</string>
                     </array>
