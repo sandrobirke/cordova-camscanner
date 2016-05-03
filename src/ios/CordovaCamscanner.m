@@ -28,34 +28,21 @@ UIImage *srcImage;
            if (iref) {
 
                UIImage *srcImage = [UIImage imageWithCGImage:iref];
-
-               //NSArray *applications = [CamScannerOpenAPIController availableApplications];
-
-               //NSMutableArray *appNames = [[NSMutableArray alloc] init];
-
-               //for (NSString *application in applications)
-               //{
-
-               //}
-               if (true)
+               
+               BOOL isCamscannerInstalled =[CamScannerOpenAPIController canOpenCamScannerLite];
+               
+               if (isCamscannerInstalled)
                {
-                   //ISBlockActionSheet *UIActionSheet = [[ISBlockActionSheet alloc] initWithTitle:@"Choose application" cancelButtonTitle:@"Cancel" cancelBlock:^{
-
-                   //} destructiveButtonTitle:nil destructiveBlock:^{
-
-                   //} otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
                    @try {
                        [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
                    } @catch (NSException *exception) {
                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                        [alertView show];
                    }
-
-                   //}];
                }
                else
                {
-                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner Free First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                    [alertView show];
                }
            }

@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate+camscanner.h"
 #import "CordovaCamscanner.h"
+#import <CamScannerOpenAPIFramework/CamScannerOpenAPIController.h>
 
 @implementation AppDelegate (camscanner)
 
-- (BOOL)application:(UIApplication ​*)application openURL:(NSURL *​)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
    if ([CamScannerOpenAPIController isSourceApplicationCamScanner:sourceApplication])
    {

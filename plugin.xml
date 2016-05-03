@@ -37,14 +37,13 @@
         <config-file target="*-Info.plist" parent="CamscannerAppKey">
             <string>$IOS_APP_KEY</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="BundleIdentifier">
-            <string>$BUNDLE_ID</string>
-        </config-file>
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
                     <key>URLSchemes</key>
-                    <string>$BUNDLE_ID</string>
+                    <array>
+                        <string>$BUNDLE_ID</string>
+                    </array>
                 </dict>
             </array>
         </config-file>
