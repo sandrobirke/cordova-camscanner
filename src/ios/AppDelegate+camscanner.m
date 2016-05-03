@@ -13,6 +13,8 @@
 
 @implementation AppDelegate (camscanner)
 
+@dynamic viewController;
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
    if ([CamScannerOpenAPIController isSourceApplicationCamScanner:sourceApplication])
