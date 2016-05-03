@@ -33,18 +33,20 @@
     </platform>
     <platform name="ios">
         <preference name="IOS_APP_KEY" />
-        <preference name="URL_SCHEME" />
+        <preference name="BUNDLE_ID" />
         <config-file target="*-Info.plist" parent="CamscannerAppKey">
             <string>$IOS_APP_KEY</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="BundleIdentifier">
+            <string>$BUNDLE_ID</string>
         </config-file>
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
                     <key>URLSchemes</key>
-                    <string>$URL_SCHEME</string>
+                    <string>$BUNDLE_ID</string>
                 </dict>
             </array>
-            <string>$IOS_APP_KEY</string>
         </config-file>
         <config-file target="config.xml" parent="/*">
             <feature name="CordovaCamscanner">
@@ -54,6 +56,8 @@
         </config-file>
         <header-file src="src/ios/CordovaCamscanner.h"/>
         <source-file src="src/ios/CordovaCamscanner.m" />
+        <header-file src="src/ios/AppDelegate+camscanner.h"/>
+        <source-file src="src/ios/AppDelegate+camscanner.m" />
         <framework src="lib/ios/CamScannerOpenAPIFramework.framework" custom="true" />
     </platform>
 </plugin>
