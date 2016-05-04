@@ -1,4 +1,5 @@
 #import <Cordova/CDVPlugin.h>
+#import <Cordova/CDV.h>
 
 @interface CordovaCamscanner : CDVPlugin <UIApplicationDelegate>
 
