@@ -19,7 +19,7 @@
    {
        NSDictionary *userInfo = [CamScannerOpenAPIController userInfoFromURL:url andSourceApplication:sourceApplication];
        NSString *fileFormat = [userInfo objectForKey:kReturnFileType];
-       NSData *data = [CamScannerOpenAPIController getImageDataFromCamScannerWithFileFormat:fileFormat];
+       NSData *data = [CamScannerOpenAPIController getJPEGDataFromCamScannerWithUserInfo:userInfo];
        NSString *encodedString = [data base64EncodedStringWithOptions:0];
        CordovaCamscanner *camscanner = [self.viewController getCommandInstance:@"CordovaCamscanner"];
        [camscanner returnBase64:encodedString];

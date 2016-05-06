@@ -2,6 +2,7 @@
 #import <Cordova/CDVPlugin.h>
 #import <CamScannerOpenAPIFramework/CamScannerOpenAPIController.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "ISBlockActionSheet.h"
 
 @interface CordovaCamscanner () <UIApplicationDelegate>
 @end
@@ -29,12 +30,28 @@ UIImage *srcImage;
 
                UIImage *srcImage = [UIImage imageWithCGImage:iref];
                
-               BOOL isCamscannerInstalled =[CamScannerOpenAPIController canOpenCamScannerLite];
-               
-               if (isCamscannerInstalled)
+               NSArray *applications = [CamScannerOpenAPIController availableApplications];
+               NSMutableArray *appNames = [[NSMutableArray alloc] init];
+               for (NSString *application in applications)
+               {
+                   NSString *appName = [self appName:application];
+                   if ([appName length] > 0)
+                   {
+                       [appNames addObject:appName];
+                   }
+               }
+
+               if ([applications count] > 0)
                {
                    @try {
-                       [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
+                       ISBlockActionSheet *actionSheet = [[ISBlockActionSheet alloc] initWithTitle:@"Choose application" cancelButtonTitle:@"Cancel" cancelBlock:^{
+                           
+                       } destructiveButtonTitle:nil destructiveBlock:^{
+                           
+                       } otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
+                           [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
+                       }];
+                       [actionSheet showInView:self.viewController.view];
                    } @catch (NSException *exception) {
                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                        [alertView show];
@@ -42,7 +59,7 @@ UIImage *srcImage;
                }
                else
                {
-                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner Free First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                    [alertView show];
                }
            }
@@ -63,6 +80,31 @@ UIImage *srcImage;
 - (void) returnBase64: (NSString*) base64EncodedString {
    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:base64EncodedString];
    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (NSString *) appName:(NSString *) inputName
+{
+    if ([inputName isEqualToString:CamScannerLite])
+    {
+        return @"CamScanner Free";
+    }
+    if ([inputName isEqualToString:CamScanner])
+    {
+        return @"CamScanner+";
+    }
+    if ([inputName isEqualToString:CamScannerPro])
+    {
+        return @"CamScanner Pro";
+    }
+    if ([inputName isEqualToString:CamScannerHD])
+    {
+        return @"CamScanner HD";
+    }
+    if ([inputName isEqualToString:CamScannerHDPro])
+    {
+        return @"CamScanner HD Pro";
+    }
+    return nil;
 }
 
 @end
