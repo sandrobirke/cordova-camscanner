@@ -47,6 +47,15 @@
                 </dict>
             </array>
         </config-file>
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+            <string>camscannerfree</string>
+            <string>camscanner</string>
+            <string>camscannerpro</string>
+            <string>camscannerhd</string>
+            <string>camscannerhdpro</string>
+            </array>
+        </config-file>
         <config-file target="config.xml" parent="/*">
             <feature name="CordovaCamscanner">
                 <param name="ios-package" value="CordovaCamscanner"/>

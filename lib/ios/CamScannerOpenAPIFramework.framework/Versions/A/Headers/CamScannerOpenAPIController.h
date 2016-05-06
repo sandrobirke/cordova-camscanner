@@ -1,6 +1,6 @@
 //
 //  CamScannerOpenAPIController.h
-//  UIPasetBoardTransferDataTest
+//  Version 1.1.0
 //
 //  Created by Felix Liu on 11/19/12.
 //  Copyright (c) 2012 IntSig. All rights reserved.
@@ -27,40 +27,43 @@ typedef enum
 
 typedef enum
 {
-    CSOpenAPIControllerErrorCodeTimeExpired = 5003,
-    CSOpenAPIControllerErrorCodeNotAuthed = 5004,
-    CSOpenAPIControllerErrorCodeDeviceCapped = 5005,
-    CSOpenAPIControllerErrorCodeEhanceModeNotSupported = 5006,
-    CSOpenAPIControllerErrorCodeReachedLimitation = 5007,
-    CSOpenAPIControllerErrorCodeUnreachable = 5008,
-    CSOpenAPIControllerErrorCodeMustLogin = 5009,
-    CSOpenAPIControllerErrorCodeDeviceIDError = 5010,
-    CSOpenAPIControllerErrorCodeAppIDError = 5011,
-    CSOpenAPIControllerErrorCodeAppKeyError = 5012,
+	CSOpenAPIControllerErrorCodeInvalidSourceImage = 4006,//returned when unable to get the source image
+	CSOpenAPIControllerErrorCodeUserCanceled = 4008,//returned when user clickes 'back' button
+	CSOpenAPIControllerErrorCodeTimeExpired = 5003,//returned when authorization expires
+    CSOpenAPIControllerErrorCodeDeviceCapped = 5005,//returned when the limit of device count is reached
+    CSOpenAPIControllerErrorCodeEhanceModeNotSupported = 5006,//returned when the enhance mode user selected is not supported
+    CSOpenAPIControllerErrorCodeReachedLimitation = 5007,//returned when the limit of image processing count is reached
+    CSOpenAPIControllerErrorCodeUnreachable = 5008,//returned when unable to get the authorization info
+    CSOpenAPIControllerErrorCodeMustLogin = 5009,//returned when login is required but the user is not logged in
+    CSOpenAPIControllerErrorCodeDeviceIDError = 5010,//returned when device ID is not authorized
+    CSOpenAPIControllerErrorCodeAppIDError = 5011,//returned when app bundle ID is not authorized
+    CSOpenAPIControllerErrorCodeAppKeyError = 5012,//returned when app key is not authorized
     CSOpenAPIReturnSuccess = 6000
 }CSOpenAPIReturnCode;
-
-typedef enum
-{
-    CSOpenAPIVersion1_0
-}CSOpenAPIVersion;
 
 @interface CamScannerOpenAPIController : NSObject
 
 
 + (void) sendImage:(UIImage *)image toTargetApplication :(NSString *)targetApp appKey:(NSString *) appKey subAppKey:(NSString *) subAppKey;
 
-
+/**
+ *  Used to get the return data info from CamScanner
+ *
+ *  Use key 'kReturnFileType' to get the returned file format, the file format may be jpg, pdf, or both of them(only supported in CamScanner 3.6.2 or later)
+ *
+ *  Use key 'kReturnCode' to get the error code with the enum type 'CSOpenAPIReturnCode'
+ */
 + (NSDictionary *) userInfoFromURL:(NSURL *)url andSourceApplication:(NSString *)sourceApp;
 
 /**
  *  Used to get the image data from CamScanner
  *
- *  @param fileFormat the fileFormat parameter returned by the method userInfoFromURL andSourceApplication:appKey:
+ *  @param userInfo the userInfo parameter returned by the method userInfoFromURL andSourceApplication:appKey:
  *
- *  @return Image data of PDF file data
+ *  @return Image data of JPEG or PDF file data
  */
-+ (NSData *) getImageDataFromCamScannerWithFileFormat:(NSString *) fileFormat;
++ (NSData *) getJPEGDataFromCamScannerWithUserInfo:(NSDictionary *)userInfo;
++ (NSData *) getPDFDataFromCamScannerWithUserInfo:(NSDictionary *)userInfo;
 
 /**
  *  Used to check whether the sourceApplication is CamScanner
@@ -114,5 +117,10 @@ typedef enum
  *  @return YES means CamScanner HD Pro is installed in this device, otherwise, returns NO
  */
 + (BOOL) canOpenCamScannerHDPro;
+
+/**
+ *  Use to get the framework version
+ */
++ (NSString *) versionString;
 
 @end
