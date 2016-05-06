@@ -66,6 +66,8 @@
         <source-file src="src/ios/CordovaCamscanner.m" />
         <header-file src="src/ios/AppDelegate+camscanner.h"/>
         <source-file src="src/ios/AppDelegate+camscanner.m" />
+        <header-file src="src/ios/ISBlockActionSheet.h" />
+        <source-file src="src/ios/ISBlockActionSheet.m" />
         <framework src="lib/ios/CamScannerOpenAPIFramework.framework" custom="true" />
     </platform>
 </plugin>
