@@ -1,10 +1,15 @@
 # cordova-camscanner
 
 ##Summary
-Send and URI of the image you want to scan, after scanning the plugin will respond with a base64 string representation of the image.
+Send the URI of the image you want to scan, after scanning the plugin will respond with a base64 string representation of the image.
 
 ## Install
-Run `cordova plugin add cordova-camscanner ANDROID_APP_KEY=APP_KEY` replace `APP_KEY` with your key.
+
+### Android
+Run `cordova plugin add cordova-camscanner --variable ANDROID_APP_KEY=YOUR_APP_KEY`.
+
+### IOS
+Run `cordova plugin add cordova-camscanner --variable IOS_APP_KEY=YOUR_APP_KEY --variable BUNDLE_ID=YOUR_BUNDLE_ID`.
 
 ## Usage
 ```
