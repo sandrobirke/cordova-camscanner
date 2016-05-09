@@ -17,12 +17,10 @@ public class CordovaCamscanner extends CordovaPlugin {
         try{
             if(action.equals("scan")) {
                 String srcUri = args.getString(0);
-                String outputUri = args.getString(1);
-                validateInputs(srcUri, outputUri);
+                validateInputs(srcUri);
                 Context context = this.cordova.getActivity().getApplicationContext();
                 Intent intent = new Intent(context, CamscannerActivity.class);
                 intent.putExtra("SRC_URI", srcUri);
-                intent.putExtra("OUTPUT_URI", outputUri);
                 cordova.setActivityResultCallback (this);
                 this.cordova.getActivity().startActivityForResult(intent, 2);
                 return true;
@@ -38,7 +36,7 @@ public class CordovaCamscanner extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == 2){
             if(data.getStringExtra("RESULT").equals("success")) {
-                _callbackContext.success(data.getStringExtra("SCANNED_IMAGE_URI"));
+                _callbackContext.success(data.getStringExtra("BASE64_RESULT"));
             }
             if(data.getStringExtra("RESULT").equals("error")) {
                 _callbackContext.success(data.getStringExtra("ERROR"));
@@ -49,14 +47,12 @@ public class CordovaCamscanner extends CordovaPlugin {
         }
     }
 
-    public void validateInputs(String srcUri, String outputUri) throws InvalidInputException {
+    public void validateInputs(String srcUri) throws InvalidInputException {
         if(srcUri == null || srcUri.isEmpty()){
             throw new InvalidInputException("invalid value for parameter: srcUri");
         }
-        if(outputUri == null || outputUri.isEmpty()){
-            throw new InvalidInputException("invalid value for parameter: outputUri");
-        }
     }
+
 }
 
 class InvalidInputException extends Exception {

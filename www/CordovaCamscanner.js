@@ -1,5 +1,5 @@
 module.exports = {
-  scan : function(srcUri, outputUri, successCallback, failureCallback) {
-    cordova.exec(successCallback, failureCallback, "CordovaCamscanner", "scan", [srcUri, outputUri]);
+  scan : function(srcUri, successCallback, failureCallback) {
+    cordova.exec(successCallback, failureCallback, "CordovaCamscanner", "scan", [srcUri]);
   }
 }

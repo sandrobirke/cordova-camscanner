@@ -30,6 +30,7 @@
         <source-file src="lib/android/csopensdk.jar" target-dir="libs" />
         <source-file src="src/android/CordovaCamscanner.java" target-dir="src/com/beelphegor/cordovacamscanner" />
         <source-file src="src/android/CamscannerActivity.java" target-dir="src/com/beelphegor/cordovacamscanner" />
+        <source-file src="src/android/Util.java" target-dir="src/com/beelphegor/cordovacamscanner" />
     </platform>
     <platform name="ios">
         <preference name="IOS_APP_KEY" />
