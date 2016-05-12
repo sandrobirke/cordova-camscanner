@@ -16,7 +16,7 @@ public class CordovaCamscanner extends CordovaPlugin {
 
         try{
             if(action.equals("scan")) {
-                String srcUri = args.getString(0);
+                String srcUri = args.getString(0).replace("file://", "");
                 validateInputs(srcUri);
                 Context context = this.cordova.getActivity().getApplicationContext();
                 Intent intent = new Intent(context, CamscannerActivity.class);
