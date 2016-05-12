@@ -43,7 +43,7 @@
                 <dict>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>com.appgyver.steroids.scanner</string>
+                        <string>$BUNDLE_ID</string>
                     </array>
                 </dict>
             </array>
