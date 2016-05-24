@@ -20,8 +20,11 @@ UIImage *srcImage;
    NSURL *asseturl = [NSURL URLWithString:srcUri];
 
    self.command = mycommand;
+   
+   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"hola"];
+   [self.commandDelegate sendPluginResult:pluginResult callbackId:mycommand.callbackId];
 
-   ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+   /*ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
    {
        ALAssetRepresentation *rep = [myasset defaultRepresentation];
        @autoreleasepool {
@@ -73,7 +76,7 @@ UIImage *srcImage;
    };
 
    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-   [assetslibrary assetForURL:asseturl resultBlock:resultblock failureBlock:failureblock];
+   [assetslibrary assetForURL:asseturl resultBlock:resultblock failureBlock:failureblock];*/
 
 }
 
