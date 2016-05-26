@@ -15,6 +15,8 @@ UIImage *srcImage;
 
 - (void) scan: (CDVInvokedUrlCommand*)mycommand
 {
+   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"qwerty"];
+   [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
    NSString *srcUri = [mycommand.arguments objectAtIndex:0];
    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CamscannerAppKey"];
    NSURL *asseturl = [NSURL URLWithString:srcUri];
