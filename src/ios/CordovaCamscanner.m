@@ -19,12 +19,7 @@ static CordovaCamscannerStaticService *instance;
 
 @end
 
-@interface CordovaCamscanner () <UIApplicationDelegate>
-@end
-
 @implementation CordovaCamscanner
-
-@synthesize command;
 
 UIImage *srcImage;
 
@@ -36,9 +31,6 @@ UIImage *srcImage;
 
     [CordovaCamscannerStaticService instance].command = mycommand;
     [CordovaCamscannerStaticService instance].plugin = self;
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mycommand.callbackId delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
     
    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
    {
@@ -68,7 +60,7 @@ UIImage *srcImage;
                        } destructiveButtonTitle:nil destructiveBlock:^{
                            
                        } otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
-                           [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
+                           [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:[applications objectAtIndex:index] appKey:appKey subAppKey:nil];
                        }];
                        [actionSheet showInView:self.viewController.view];
                    } @catch (NSException *exception) {
@@ -94,14 +86,6 @@ UIImage *srcImage;
    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
    [assetslibrary assetForURL:asseturl resultBlock:resultblock failureBlock:failureblock];
 
-}
-
-- (void) returnBase64: (NSString*) base64EncodedString {
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[CordovaCamscannerStaticService instance].command.callbackId];
-   [[CordovaCamscannerStaticService instance].plugin.commandDelegate sendPluginResult:pluginResult callbackId:[CordovaCamscannerStaticService instance].command.callbackId];
 }
 
 - (NSString *) appName:(NSString *) inputName
