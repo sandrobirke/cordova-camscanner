@@ -15,7 +15,7 @@ UIImage *srcImage;
 
 - (void) scan: (CDVInvokedUrlCommand*)mycommand
 {
-UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:@"entering plugin" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:mycommand.callbackId delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alertView1 show];
    NSString *srcUri = [mycommand.arguments objectAtIndex:0];
    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CamscannerAppKey"];
