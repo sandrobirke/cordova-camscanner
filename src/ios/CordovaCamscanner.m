@@ -4,6 +4,21 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ISBlockActionSheet.h"
 
+@implementation CordovaCamscannerStaticService
+
+@synthesize command, plugin;
+
+static CordovaCamscannerStaticService *instance;
+
++(CordovaCamscannerStaticService*) instance {
+    if(instance == nil){
+        instance = [CordovaCamscannerStaticService new];
+    }
+    return instance;
+}
+
+@end
+
 @interface CordovaCamscanner () <UIApplicationDelegate>
 @end
 
@@ -15,14 +30,16 @@ UIImage *srcImage;
 
 - (void) scan: (CDVInvokedUrlCommand*)mycommand
 {
-UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:mycommand.callbackId delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView1 show];
    NSString *srcUri = [mycommand.arguments objectAtIndex:0];
    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CamscannerAppKey"];
    NSURL *asseturl = [NSURL URLWithString:srcUri];
 
-   self.command = mycommand;
-
+    [CordovaCamscannerStaticService instance].command = mycommand;
+    [CordovaCamscannerStaticService instance].plugin = self;
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mycommand.callbackId delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
+    
    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
    {
        ALAssetRepresentation *rep = [myasset defaultRepresentation];
@@ -51,20 +68,18 @@ UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:mycomma
                        } destructiveButtonTitle:nil destructiveBlock:^{
                            
                        } otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
-                       UIAlertView *alertView2 = [[UIAlertView alloc] initWithTitle:nil message:@"calling scanner" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView2 show];
                            [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
                        }];
                        [actionSheet showInView:self.viewController.view];
                    } @catch (NSException *exception) {
-                       UIAlertView *alertView3 = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                       [alertView3 show];
+                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                       [alertView show];
                    }
                }
                else
                {
-                   UIAlertView *alertView4 = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                   [alertView4 show];
+                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                   [alertView show];
                }
            }
        }
@@ -82,10 +97,11 @@ UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:mycomma
 }
 
 - (void) returnBase64: (NSString*) base64EncodedString {
-UIAlertView *alertView5 = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView5 show];
-   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:base64EncodedString];
-   [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[CordovaCamscannerStaticService instance].command.callbackId];
+   [[CordovaCamscannerStaticService instance].plugin.commandDelegate sendPluginResult:pluginResult callbackId:[CordovaCamscannerStaticService instance].command.callbackId];
 }
 
 - (NSString *) appName:(NSString *) inputName
