@@ -28,6 +28,8 @@
        UIAlertView *alertView8 = [[UIAlertView alloc] initWithTitle:nil message:@"sending result" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alertView8 show];
     CordovaCamscanner *camscanner = [self.viewController getCommandInstance:@"CordovaCamscanner"];
+    UIAlertView *alertView9 = [[UIAlertView alloc] initWithTitle:nil message:camscanner.command.callbackId delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+       [alertView9 show];
        [camscanner returnBase64:encodedString];
    }
    return YES;
