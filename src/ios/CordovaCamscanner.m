@@ -15,8 +15,8 @@ UIImage *srcImage;
 
 - (void) scan: (CDVInvokedUrlCommand*)mycommand
 {
-UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"entering plugin" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
+UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:nil message:@"entering plugin" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView1 show];
    NSString *srcUri = [mycommand.arguments objectAtIndex:0];
    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CamscannerAppKey"];
    NSURL *asseturl = [NSURL URLWithString:srcUri];
@@ -51,20 +51,20 @@ UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"enteri
                        } destructiveButtonTitle:nil destructiveBlock:^{
                            
                        } otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
-                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"calling scanner" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
+                       UIAlertView *alertView2 = [[UIAlertView alloc] initWithTitle:nil message:@"calling scanner" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView2 show];
                            [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
                        }];
                        [actionSheet showInView:self.viewController.view];
                    } @catch (NSException *exception) {
-                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                       [alertView show];
+                       UIAlertView *alertView3 = [[UIAlertView alloc] initWithTitle:nil message:@"Can't get image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                       [alertView3 show];
                    }
                }
                else
                {
-                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                   [alertView show];
+                   UIAlertView *alertView4 = [[UIAlertView alloc] initWithTitle:nil message:@"You should install CamScanner First" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                   [alertView4 show];
                }
            }
        }
@@ -82,8 +82,8 @@ UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"enteri
 }
 
 - (void) returnBase64: (NSString*) base64EncodedString {
-UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
+UIAlertView *alertView5 = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView5 show];
    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:base64EncodedString];
    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
