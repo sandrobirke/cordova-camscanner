@@ -21,11 +21,20 @@
        NSData *data = [CamScannerOpenAPIController getJPEGDataFromCamScannerWithUserInfo:userInfo];
        NSString *encodedString = [data base64EncodedStringWithOptions:0];
        NSString *returnCode = [userInfo objectForKey:kReturnCode];
-        if (![returnCode isEqualToString:@"6000"])
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Code:%@", returnCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-        }
+       if (![returnCode isEqualToString:@"6000"])
+       {
+           UIAlertView *alert;
+           if([returnCode isEqualToString:@"5009"])
+           {
+               alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Code: 5009: login is required, please log in on your camscanner app" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+               [alert show];
+           } 
+           else 
+           {
+               alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Code:%@", returnCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+               [alert show];
+           }
+       }
        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:encodedString];
        [[CordovaCamscannerStaticService instance].plugin.commandDelegate sendPluginResult:pluginResult callbackId:[CordovaCamscannerStaticService instance].command.callbackId];
    }
