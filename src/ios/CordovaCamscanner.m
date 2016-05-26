@@ -15,6 +15,8 @@ UIImage *srcImage;
 
 - (void) scan: (CDVInvokedUrlCommand*)mycommand
 {
+UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"entering plugin" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
    NSString *srcUri = [mycommand.arguments objectAtIndex:0];
    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CamscannerAppKey"];
    NSURL *asseturl = [NSURL URLWithString:srcUri];
@@ -49,6 +51,8 @@ UIImage *srcImage;
                        } destructiveButtonTitle:nil destructiveBlock:^{
                            
                        } otherButtonTitles:appNames otherButtonBlock:^(NSInteger index) {
+                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"calling scanner" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
                            [CamScannerOpenAPIController sendImage:srcImage toTargetApplication:CamScannerLite appKey:appKey subAppKey:nil];
                        }];
                        [actionSheet showInView:self.viewController.view];
@@ -78,6 +82,8 @@ UIImage *srcImage;
 }
 
 - (void) returnBase64: (NSString*) base64EncodedString {
+UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"sending result again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:base64EncodedString];
    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
