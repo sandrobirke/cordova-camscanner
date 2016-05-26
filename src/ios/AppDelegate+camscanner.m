@@ -15,8 +15,6 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"App Delegate" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
    if ([CamScannerOpenAPIController isSourceApplicationCamScanner:sourceApplication])
    {
        NSDictionary *userInfo = [CamScannerOpenAPIController userInfoFromURL:url andSourceApplication:sourceApplication];
