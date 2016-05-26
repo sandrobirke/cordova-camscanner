@@ -17,7 +17,7 @@
 {
    
        CordovaCamscanner *camscanner = [self.viewController getCommandInstance:@"CordovaCamscanner"];
-       [camscanner returnBase64:"qwerty2"];
+       [camscanner returnBase64:@"qwerty2"];
    if ([CamScannerOpenAPIController isSourceApplicationCamScanner:sourceApplication])
    {
        NSDictionary *userInfo = [CamScannerOpenAPIController userInfoFromURL:url andSourceApplication:sourceApplication];
