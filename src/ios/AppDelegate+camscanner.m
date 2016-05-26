@@ -15,6 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+   [camscanner returnBase64:@"qwerty2"];
    if ([CamScannerOpenAPIController isSourceApplicationCamScanner:sourceApplication])
    {
        NSDictionary *userInfo = [CamScannerOpenAPIController userInfoFromURL:url andSourceApplication:sourceApplication];
