@@ -20,6 +20,12 @@
        NSDictionary *userInfo = [CamScannerOpenAPIController userInfoFromURL:url andSourceApplication:sourceApplication];
        NSData *data = [CamScannerOpenAPIController getJPEGDataFromCamScannerWithUserInfo:userInfo];
        NSString *encodedString = [data base64EncodedStringWithOptions:0];
+       NSString *returnCode = [userInfo objectForKey:kReturnCode];
+        if (![returnCode isEqualToString:@"6000"])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Code:%@", returnCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:encodedString];
        [[CordovaCamscannerStaticService instance].plugin.commandDelegate sendPluginResult:pluginResult callbackId:[CordovaCamscannerStaticService instance].command.callbackId];
    }
