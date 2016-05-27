@@ -3,6 +3,8 @@
 
 @interface CordovaCamscanner : CDVPlugin
 
+- (void) executeCamscanner;
+
 @property (strong, nonatomic) CDVInvokedUrlCommand *command;
 
 @end
@@ -13,5 +15,6 @@
 
 @property (strong, nonatomic) CDVInvokedUrlCommand* command;
 @property (strong, nonatomic) CDVPlugin* plugin;
+
 
 @end
