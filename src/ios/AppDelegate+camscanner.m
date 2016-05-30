@@ -29,6 +29,11 @@
                alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Code: 5009: login is required, please log in on your camscanner app" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                [alert show];
            } 
+           else if([returnCode isEqualToString:@"4008"])
+           {
+               alert = [[UIAlertView alloc] initWithTitle:@"Canceled" message:@"You have canceled the scan" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+               [alert show];
+           }
            else 
            {
                alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Code:%@", returnCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
