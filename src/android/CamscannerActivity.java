@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 public class CamscannerActivity extends Activity {
     CSOpenAPI api;
     String _scannedFileUri;
+    private final int REQ_CODE_CALL_CAMSCANNER = 2;
 
     private static final String DIR_IMAGE = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Tafs";
 
@@ -44,38 +45,47 @@ public class CamscannerActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        api.handleResult(requestCode, resultCode, data, new CSOpenApiHandler() {
+      if(resultCode != RESULT_CANCELED) {
+          if(requestCode == REQ_CODE_CALL_CAMSCANNER) {
+            api.handleResult(requestCode, resultCode, data, new CSOpenApiHandler() {
+                @Override
+                public void onSuccess() {
+                    Intent databackIntent = new Intent();
+                    databackIntent.putExtra("RESULT", "success");
+                    Bitmap mBitmap = Util.loadBitmap(_scannedFileUri + ".jpg");
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+                    byte[] byteArrayImage = baos.toByteArray();
+                    String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+                    databackIntent.putExtra("BASE64_RESULT", encodedImage);
+                    setResult(Activity.RESULT_OK, databackIntent);
+                    finish();
+                }
 
-            @Override
-            public void onSuccess() {
-                Intent databackIntent = new Intent();
-                databackIntent.putExtra("RESULT", "success");
-                Bitmap mBitmap = Util.loadBitmap(_scannedFileUri + ".jpg");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
-                byte[] byteArrayImage = baos.toByteArray();
-                String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-                databackIntent.putExtra("BASE64_RESULT", encodedImage);
-                setResult(Activity.RESULT_OK, databackIntent);
-                finish();
-            }
+                @Override
+                public void onError(int errorCode) {
+                    Intent databackIntent = new Intent();
+                    databackIntent.putExtra("RESULT", "error");
+                    databackIntent.putExtra("ERROR", "There was an error creating the image. Error Code: " + errorCode);
+                    setResult(Activity.RESULT_OK, databackIntent);
+                    finish();
+                }
 
-            @Override
-            public void onError(int errorCode) {
-                Intent databackIntent = new Intent();
-                databackIntent.putExtra("RESULT", "error");
-                databackIntent.putExtra("ERROR", "There was an error creating the image. Error Code: " + errorCode);
-                setResult(Activity.RESULT_OK, databackIntent);
-                finish();
-            }
-
-            @Override
-            public void onCancel() {
-                Intent databackIntent = new Intent();
-                databackIntent.putExtra("RESULT", "cancel");
-                setResult(Activity.RESULT_OK, databackIntent);
-                finish();
-            }
-        });
+                @Override
+                public void onCancel() {
+                    Intent databackIntent = new Intent();
+                    databackIntent.putExtra("RESULT", "cancel");
+                    setResult(Activity.RESULT_OK, databackIntent);
+                    finish();
+                }
+            });
+          }
+      }
+      else {
+        Intent databackIntent = new Intent();
+        databackIntent.putExtra("RESULT", "cancel");
+        setResult(Activity.RESULT_OK, databackIntent);
+        finish();
+      }
     }
 }
