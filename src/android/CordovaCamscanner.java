@@ -39,10 +39,10 @@ public class CordovaCamscanner extends CordovaPlugin {
                 _callbackContext.success(data.getStringExtra("BASE64_RESULT"));
             }
             if(data.getStringExtra("RESULT").equals("error")) {
-                _callbackContext.success(data.getStringExtra("ERROR"));
+                _callbackContext.error(data.getStringExtra("ERROR"));
             }
             if(data.getStringExtra("RESULT").equals("cancel")) {
-                _callbackContext.success("canceled");
+                _callbackContext.error("canceled");
             }
         }
     }
