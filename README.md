@@ -24,12 +24,9 @@ navigator.camera.getPicture(
   },
   function(error){console.log(error);},
   {
-     quality: 100,
-       //For IOS: Use NATIVE_URI (eg. asset-library://... )
-       //For Android: Use FILE_URI (eg. /storage/extSdCard/DCIM/Camera/20160229_171353.jpg)
-       //See https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-camera/index.html#cameradestinationtype-:-enum for more details
-       destinationType: navigator.camera.DestinationType.NATIVE_URI,
-       sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+    quality: 100,
+    destinationType: navigator.camera.DestinationType.FILE_URI,
+    sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
   }
 );
 
