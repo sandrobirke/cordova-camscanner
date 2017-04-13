@@ -36,7 +36,7 @@ public class CordovaCamscanner extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == 2){
             if(data.getStringExtra("RESULT").equals("success")) {
-                _callbackContext.success(data.getStringExtra("BASE64_RESULT"));
+                 _callbackContext.success(DataHolder.getInstance().getData());
             }
             if(data.getStringExtra("RESULT").equals("error")) {
                 _callbackContext.error(data.getStringExtra("ERROR"));
