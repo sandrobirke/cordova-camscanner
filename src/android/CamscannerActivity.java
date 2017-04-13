@@ -65,7 +65,7 @@ public class CamscannerActivity extends Activity {
                     mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                     byte[] byteArrayImage = baos.toByteArray();
                     String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-                    databackIntent.putExtra("BASE64_RESULT", encodedImage);
+                    DataHolder.getInstance().setData(encodedImage);
                     setResult(Activity.RESULT_OK, databackIntent);
                     finish();
                 }
