@@ -15,14 +15,7 @@ import com.intsig.csopen.sdk.CSOpenApiHandler;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 
-class DataHolder {
-    private String data;
-    public String getData() {return data;}
-    public void setData(String data) {this.data = data;}
-
-    private static final DataHolder holder = new DataHolder();
-    public static DataHolder getInstance() {return holder;}
-}
+import android.util.Log;
 
 public class CamscannerActivity extends Activity {
     CSOpenAPI api;
@@ -40,24 +33,17 @@ public class CamscannerActivity extends Activity {
 
         int appResId = this.getResources().getIdentifier("camscanner_app_key", "string", this.getPackageName());
         String appKey = this.getString(appResId);
+        Log.e("########### CamScanner Output: #############", appKey);
         api = CSOpenApiFactory.createCSOpenApi(this.getApplicationContext(), appKey, null);
-        if (api.isCamScannerInstalled()) {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
-            _scannedFileUri = DIR_IMAGE + "/" + timeStamp;
-            CSOpenAPIParam openApiParam = new CSOpenAPIParam(
-                    srcUri,
-                    _scannedFileUri + ".jpg",
-                    _scannedFileUri + ".pdf",
-                    _scannedFileUri + "_org.jpg",
-                    1.0f);
-            boolean res = api.scanImage(this, 2, openApiParam);
-        } else {
-            Intent databackIntent = new Intent();
-            databackIntent.putExtra("RESULT", "error");
-            databackIntent.putExtra("ERROR", "You should install CamScanner First");
-            setResult(Activity.RESULT_OK, databackIntent);
-            finish();
-        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        _scannedFileUri = DIR_IMAGE + "/" + timeStamp;
+        CSOpenAPIParam openApiParam = new CSOpenAPIParam(
+                srcUri,
+                _scannedFileUri + ".jpg",
+                _scannedFileUri + ".pdf",
+                _scannedFileUri + "_org.jpg",
+                1.0f);
+        boolean res = api.scanImage(this, 2, openApiParam);
     }
 
     @Override
@@ -70,12 +56,19 @@ public class CamscannerActivity extends Activity {
                     Intent databackIntent = new Intent();
                     databackIntent.putExtra("RESULT", "success");
                     Bitmap mBitmap = Util.loadBitmap(_scannedFileUri + ".jpg");
+
+                    String imagePathCM = _scannedFileUri + ".jpg";
+                    Log.e("###########################", _scannedFileUri + ".jpg");
+
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 95, baos);
                     byte[] byteArrayImage = baos.toByteArray();
                     String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-                    DataHolder.getInstance().setData(encodedImage);
+                    //databackIntent.putExtra("BASE64_RESULT", encodedImage);
+                    databackIntent.putExtra("BASE64_RESULT", imagePathCM);
+                    // setResult(Activity.RESULT_OK, databackIntent);
                     setResult(Activity.RESULT_OK, databackIntent);
+
                     finish();
                 }
 
